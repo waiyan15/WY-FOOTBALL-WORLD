@@ -9,7 +9,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: #0b0f19; color: #e6edf3; padding-bottom: 30px; }
     
-    /* Navbar */
     .navbar {
       background: #111827;
       border-bottom: 1px solid #1f2937;
@@ -24,7 +23,6 @@
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; color: #38bdf8; }
     .btn-refresh { background: #1e293b; border: 1px solid #334155; color: #38bdf8; padding: 6px 12px; border-radius: 8px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
 
-    /* API Token Box */
     .token-card {
       background: #151d2e;
       border: 1px solid #1e293b;
@@ -47,10 +45,8 @@
       width: 100%;
     }
 
-    /* Container */
     .container { max-width: 700px; margin: 0 auto; padding: 0 14px; }
 
-    /* League Selector & Tabs */
     .league-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 12px; }
     .league-btn { background: #161f30; color: #94a3b8; border: 1px solid #1f293d; padding: 6px 14px; border-radius: 20px; font-size: 12px; cursor: pointer; white-space: nowrap; }
     .league-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
@@ -59,7 +55,6 @@
     .view-btn { flex: 1; text-align: center; padding: 8px; border-radius: 8px; font-size: 12.5px; cursor: pointer; color: #94a3b8; border: none; background: transparent; }
     .view-btn.active { background: #1e293b; color: #38bdf8; font-weight: bold; }
 
-    /* Match Cards */
     .match-card {
       background: #111827;
       border: 1px solid #1f2937;
@@ -77,7 +72,6 @@
     .score-badge { background: #0b101a; border: 1px solid #1f293d; padding: 4px 10px; border-radius: 8px; font-size: 14px; font-weight: 800; color: #38bdf8; }
     .status-text { font-size: 10px; margin-top: 4px; color: #ef4444; font-weight: bold; }
 
-    /* Standings Table */
     .table-box { background: #111827; border: 1px solid #1f2937; border-radius: 12px; overflow-x: auto; padding: 8px; }
     table { width: 100%; border-collapse: collapse; font-size: 12.5px; text-align: center; }
     th { color: #64748b; font-size: 11px; padding: 8px 4px; border-bottom: 1px solid #1f2937; }
@@ -89,7 +83,6 @@
 </head>
 <body>
 
-  <!-- Top Navbar -->
   <div class="navbar">
     <div class="brand">
       <i class="fa-solid fa-futbol"></i>
@@ -101,13 +94,11 @@
   </div>
 
   <div class="container">
-    <!-- Token Setup -->
     <div class="token-card">
-      <span style="font-size: 11px; color: #94a3b8;"><i class="fa-solid fa-key"></i> Football-Data.org API Token ထည့်ရန် (Auto-saved)</span>
-      <input type="password" id="apiTokenInput" class="token-input" placeholder="Token ထည့်ပါ (ဥပမာ- 8f2a...)" onchange="saveToken()">
+      <span style="font-size: 11px; color: #94a3b8;"><i class="fa-solid fa-key"></i> Football-Data.org API Token ထည့်ရန်</span>
+      <input type="password" id="apiTokenInput" class="token-input" placeholder="Token ထည့်ပါ..." onchange="saveToken()">
     </div>
 
-    <!-- League Selector -->
     <div class="league-bar">
       <button class="league-btn active" onclick="switchLeague('PL', this)">Premier League</button>
       <button class="league-btn" onclick="switchLeague('CL', this)">Champions League</button>
@@ -116,7 +107,6 @@
       <button class="league-btn" onclick="switchLeague('BL1', this)">Bundesliga</button>
     </div>
 
-    <!-- View Switcher -->
     <div class="view-toggle">
       <button class="view-btn active" id="btnViewMatches" onclick="toggleView('matches')">
         <i class="fa-solid fa-stopwatch"></i> ပွဲစဉ်များနှင့် ရလဒ်များ
@@ -126,7 +116,6 @@
       </button>
     </div>
 
-    <!-- Dynamic Content Area -->
     <div id="contentMatches">
       <div id="matchesList" class="loading-spinner">ဒေတာများ ဆွဲယူနေပါသည်...</div>
     </div>
@@ -154,6 +143,9 @@
   <script>
     let currentLeague = 'PL';
     let currentView = 'matches';
+
+    // CORS Proxy ကို ထည့်သွင်းထားသောကြောင့် Browser Block မဖြစ်တော့ပါ
+    const CORS_PROXY = "https://api.allorigins.win/raw?url=";
 
     window.onload = function() {
       const savedToken = localStorage.getItem('wy_football_token');
@@ -192,7 +184,6 @@
       fetchFootballData();
     }
 
-    // Direct Live API Fetcher with CORS Proxy
     async function fetchFootballData() {
       const token = document.getElementById('apiTokenInput').value.trim();
       const matchesContainer = document.getElementById('matchesList');
@@ -200,7 +191,7 @@
 
       if (!token) {
         matchesContainer.innerHTML = `<div style="text-align:center; padding:20px; color:#f87171;">
-          football-data.org မှ အခမဲ့ Token ယူပြီး အပေါ်ကွက်လပ်တွင် ထည့်သွင်းပေးပါ။
+          Football-Data Token ထည့်သွင်းပေးပါ။
         </div>`;
         return;
       }
@@ -208,20 +199,20 @@
       if (currentView === 'matches') {
         matchesContainer.innerHTML = `<div class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> ပွဲစဉ်ဒေတာ ဆွဲယူနေပါသည်...</div>`;
         try {
-          // Fetch Real Fixtures
-          const res = await fetch(`https://api.football-data.org/v4/competitions/${currentLeague}/matches?status=SCHEDULED,LIVE,IN_PLAY,PAUSED,FINISHED`, {
+          const targetUrl = `https://api.football-data.org/v4/competitions/${currentLeague}/matches`;
+          const res = await fetch(CORS_PROXY + encodeURIComponent(targetUrl), {
             headers: { 'X-Auth-Token': token }
           });
           const data = await res.json();
           renderMatches(data.matches || []);
         } catch (e) {
-          matchesContainer.innerHTML = `<div style="text-align:center; padding:20px; color:#f87171;">ဒေတာခေါ်ယူမှု မအောင်မြင်ပါ။ Token ကို ပြန်လည်စစ်ဆေးပေးပါ။</div>`;
+          matchesContainer.innerHTML = `<div style="text-align:center; padding:20px; color:#f87171;">ဒေတာခေါ်ယူမှု မအောင်မြင်ပါ။ အင်တာနက်ချိတ်ဆက်မှု သို့မဟုတ် Token ပြန်စစ်ပေးပါ။</div>`;
         }
       } else {
         standingsBody.innerHTML = `<tr><td colspan="7" class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> ဇယားဒေတာ ဆွဲယူနေပါသည်...</td></tr>`;
         try {
-          // Fetch Real League Table
-          const res = await fetch(`https://api.football-data.org/v4/competitions/${currentLeague}/standings`, {
+          const targetUrl = `https://api.football-data.org/v4/competitions/${currentLeague}/standings`;
+          const res = await fetch(CORS_PROXY + encodeURIComponent(targetUrl), {
             headers: { 'X-Auth-Token': token }
           });
           const data = await res.json();
@@ -235,12 +226,11 @@
     function renderMatches(matches) {
       const container = document.getElementById('matchesList');
       if (!matches.length) {
-        container.innerHTML = `<div style="text-align:center; padding:20px; color:#64748b;">လတ်တလော ပွဲစဉ် မရှိသေးပါ။</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:20px; color:#64748b;">ပွဲစဉ် မရှိသေးပါ။</div>`;
         return;
       }
 
-      // Show latest 12 matches
-      const sliceMatches = matches.slice(0, 12);
+      const sliceMatches = matches.slice(-12).reverse();
       let html = '';
 
       sliceMatches.forEach(m => {
@@ -250,8 +240,8 @@
         const awayScore = m.score?.fullTime?.away ?? '-';
 
         let statusText = 'မကစားရသေး';
-        if (isLive) statusText = '🔴 LIVE ကစားနေဆဲ';
-        else if (isFinished) statusText = 'ပြီးဆုံး (FT)';
+        if (isLive) statusText = '🔴 LIVE';
+        else if (isFinished) statusText = 'FT';
 
         html += `
           <div class="match-card">
