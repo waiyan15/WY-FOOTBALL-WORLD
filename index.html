@@ -21,64 +21,29 @@
       z-index: 100;
     }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; color: #38bdf8; }
+    .status-badge { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+
+    .container { max-width: 720px; margin: 16px auto; padding: 0 14px; }
+
+    /* League Selector */
+    .league-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 14px; }
+    .league-btn { background: #161f30; color: #94a3b8; border: 1px solid #1f293d; padding: 8px 16px; border-radius: 20px; font-size: 12.5px; cursor: pointer; white-space: nowrap; transition: 0.2s; }
+    .league-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; font-weight: bold; }
+
+    /* Action bar */
+    .action-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .table-title { font-size: 14px; font-weight: bold; color: #cbd5e1; display: flex; align-items: center; gap: 8px; }
     .btn-refresh { background: #1e293b; border: 1px solid #334155; color: #38bdf8; padding: 6px 12px; border-radius: 8px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
 
-    .token-card {
-      background: #151d2e;
-      border: 1px solid #1e293b;
-      border-radius: 12px;
-      margin: 14px auto;
-      max-width: 700px;
-      padding: 12px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .token-input {
-      background: #0b101a;
-      border: 1px solid #334155;
-      padding: 8px 12px;
-      border-radius: 8px;
-      color: #38bdf8;
-      font-size: 13px;
-      outline: none;
-      width: 100%;
-    }
-
-    .container { max-width: 700px; margin: 0 auto; padding: 0 14px; }
-
-    .league-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 12px; }
-    .league-btn { background: #161f30; color: #94a3b8; border: 1px solid #1f293d; padding: 6px 14px; border-radius: 20px; font-size: 12px; cursor: pointer; white-space: nowrap; }
-    .league-btn.active { background: #0284c7; color: #fff; border-color: #0284c7; }
-
-    .view-toggle { display: flex; background: #111827; border-radius: 10px; padding: 3px; border: 1px solid #1f2937; margin-bottom: 14px; }
-    .view-btn { flex: 1; text-align: center; padding: 8px; border-radius: 8px; font-size: 12.5px; cursor: pointer; color: #94a3b8; border: none; background: transparent; }
-    .view-btn.active { background: #1e293b; color: #38bdf8; font-weight: bold; }
-
-    .match-card {
-      background: #111827;
-      border: 1px solid #1f2937;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .team { display: flex; align-items: center; gap: 8px; flex: 1; font-size: 13px; font-weight: 600; }
-    .team.right { justify-content: flex-end; }
-    .team-img { width: 24px; height: 24px; object-fit: contain; }
-    .score-container { text-align: center; min-width: 80px; padding: 0 8px; }
-    .score-badge { background: #0b101a; border: 1px solid #1f293d; padding: 4px 10px; border-radius: 8px; font-size: 14px; font-weight: 800; color: #38bdf8; }
-    .status-text { font-size: 10px; margin-top: 4px; color: #ef4444; font-weight: bold; }
-
-    .table-box { background: #111827; border: 1px solid #1f2937; border-radius: 12px; overflow-x: auto; padding: 8px; }
+    /* Table */
+    .table-box { background: #111827; border: 1px solid #1f2937; border-radius: 14px; overflow-x: auto; padding: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
     table { width: 100%; border-collapse: collapse; font-size: 12.5px; text-align: center; }
-    th { color: #64748b; font-size: 11px; padding: 8px 4px; border-bottom: 1px solid #1f2937; }
-    td { padding: 9px 4px; border-bottom: 1px solid #141d2e; }
-    td.team-name { text-align: left; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+    th { color: #64748b; font-size: 11px; padding: 10px 4px; border-bottom: 1px solid #1f2937; }
+    td { padding: 10px 4px; border-bottom: 1px solid #141d2e; }
+    td.team-name { text-align: left; font-weight: 600; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+    .team-badge-img { width: 22px; height: 22px; object-fit: contain; }
 
-    .loading-spinner { text-align: center; padding: 30px; color: #64748b; font-size: 13px; }
+    .loading-spinner { text-align: center; padding: 40px; color: #94a3b8; font-size: 13px; }
   </style>
 </head>
 <body>
@@ -86,208 +51,121 @@
   <div class="navbar">
     <div class="brand">
       <i class="fa-solid fa-futbol"></i>
-      <span>WY FOOTBALL LIVE</span>
+      <span>WY FOOTBALL HUB</span>
     </div>
-    <button class="btn-refresh" onclick="fetchFootballData()">
-      <i class="fa-solid fa-arrows-rotate"></i> Refresh
-    </button>
+    <div class="status-badge"><i class="fa-solid fa-bolt"></i> Live Data</div>
   </div>
 
   <div class="container">
-    <div class="token-card">
-      <span style="font-size: 11px; color: #94a3b8;"><i class="fa-solid fa-key"></i> Football-Data.org API Token ထည့်ရန်</span>
-      <input type="password" id="apiTokenInput" class="token-input" placeholder="Token ထည့်ပါ..." onchange="saveToken()">
-    </div>
-
+    <!-- League Switcher Buttons -->
     <div class="league-bar">
-      <button class="league-btn active" onclick="switchLeague('PL', this)">Premier League</button>
-      <button class="league-btn" onclick="switchLeague('CL', this)">Champions League</button>
-      <button class="league-btn" onclick="switchLeague('PD', this)">La Liga</button>
-      <button class="league-btn" onclick="switchLeague('SA', this)">Serie A</button>
-      <button class="league-btn" onclick="switchLeague('BL1', this)">Bundesliga</button>
+      <button class="league-btn active" onclick="changeLeague('4328', this)">Premier League</button>
+      <button class="league-btn" onclick="changeLeague('4335', this)">La Liga</button>
+      <button class="league-btn" onclick="changeLeague('4332', this)">Serie A</button>
+      <button class="league-btn" onclick="changeLeague('4331', this)">Bundesliga</button>
+      <button class="league-btn" onclick="changeLeague('4334', this)">Ligue 1</button>
     </div>
 
-    <div class="view-toggle">
-      <button class="view-btn active" id="btnViewMatches" onclick="toggleView('matches')">
-        <i class="fa-solid fa-stopwatch"></i> ပွဲစဉ်များနှင့် ရလဒ်များ
-      </button>
-      <button class="view-btn" id="btnViewStandings" onclick="toggleView('standings')">
-        <i class="fa-solid fa-list-ol"></i> အမှတ်ပေးဇယား
-      </button>
-    </div>
-
-    <div id="contentMatches">
-      <div id="matchesList" class="loading-spinner">ဒေတာများ ဆွဲယူနေပါသည်...</div>
-    </div>
-
-    <div id="contentStandings" style="display: none;">
-      <div class="table-box">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th style="text-align: left;">အသင်း</th>
-              <th>ပွဲ</th>
-              <th>နိုင်</th>
-              <th>သရေ</th>
-              <th>ရှုံး</th>
-              <th>ရမှတ်</th>
-            </tr>
-          </thead>
-          <tbody id="standingsBody"></tbody>
-        </table>
+    <div class="action-row">
+      <div class="table-title" id="currentLeagueName">
+        <i class="fa-solid fa-trophy" style="color: #f59e0b;"></i> အမှတ်ပေးဇယား အဆင့်များ
       </div>
+      <button class="btn-refresh" onclick="loadStandings()">
+        <i class="fa-solid fa-arrows-rotate"></i> Refresh
+      </button>
+    </div>
+
+    <!-- Live Standings Table Container -->
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th style="text-align: left;">အသင်း</th>
+            <th>ပွဲ</th>
+            <th>နိုင်</th>
+            <th>သရေ</th>
+            <th>ရှုံး</th>
+            <th>ဂိုးကွာ</th>
+            <th>ရမှတ်</th>
+          </tr>
+        </thead>
+        <tbody id="standingsTableBody">
+          <tr><td colspan="8" class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> အမှတ်ပေးဇယားကို ဆွဲယူနေပါသည်...</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <script>
-    let currentLeague = 'PL';
-    let currentView = 'matches';
-
-    // CORS Proxy ကို ထည့်သွင်းထားသောကြောင့် Browser Block မဖြစ်တော့ပါ
-    const CORS_PROXY = "https://api.allorigins.win/raw?url=";
+    let currentLeagueId = '4328'; // Default: English Premier League
 
     window.onload = function() {
-      const savedToken = localStorage.getItem('wy_football_token');
-      if (savedToken) {
-        document.getElementById('apiTokenInput').value = savedToken;
-      }
-      fetchFootballData();
+      loadStandings();
     };
 
-    function saveToken() {
-      const token = document.getElementById('apiTokenInput').value.trim();
-      localStorage.setItem('wy_football_token', token);
-      fetchFootballData();
-    }
-
-    function switchLeague(code, el) {
-      currentLeague = code;
-      document.querySelectorAll('.league-btn').forEach(b => b.classList.remove('active'));
+    function changeLeague(id, el) {
+      currentLeagueId = id;
+      document.querySelectorAll('.league-btn').forEach(btn => btn.classList.remove('active'));
       el.classList.add('active');
-      fetchFootballData();
+      loadStandings();
     }
 
-    function toggleView(view) {
-      currentView = view;
-      if (view === 'matches') {
-        document.getElementById('contentMatches').style.display = 'block';
-        document.getElementById('contentStandings').style.display = 'none';
-        document.getElementById('btnViewMatches').classList.add('active');
-        document.getElementById('btnViewStandings').classList.remove('active');
-      } else {
-        document.getElementById('contentMatches').style.display = 'none';
-        document.getElementById('contentStandings').style.display = 'block';
-        document.getElementById('btnViewStandings').classList.add('active');
-        document.getElementById('btnViewMatches').classList.remove('active');
-      }
-      fetchFootballData();
-    }
+    async function loadStandings() {
+      const tbody = document.getElementById('standingsTableBody');
+      tbody.innerHTML = `<tr><td colspan="8" class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> တကယ့် Live ဒေတာများကို ဆွဲယူနေပါသည်...</td></tr>`;
 
-    async function fetchFootballData() {
-      const token = document.getElementById('apiTokenInput').value.trim();
-      const matchesContainer = document.getElementById('matchesList');
-      const standingsBody = document.getElementById('standingsBody');
+      try {
+        // Open API with no CORS restriction and no private token needed
+        const url = `https://www.thesportsdb.com/api/v1/json/3/lookuptable.php?l=${currentLeagueId}&s=2024-2025`;
+        const res = await fetch(url);
+        const data = await res.json();
 
-      if (!token) {
-        matchesContainer.innerHTML = `<div style="text-align:center; padding:20px; color:#f87171;">
-          Football-Data Token ထည့်သွင်းပေးပါ။
-        </div>`;
-        return;
-      }
-
-      if (currentView === 'matches') {
-        matchesContainer.innerHTML = `<div class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> ပွဲစဉ်ဒေတာ ဆွဲယူနေပါသည်...</div>`;
-        try {
-          const targetUrl = `https://api.football-data.org/v4/competitions/${currentLeague}/matches`;
-          const res = await fetch(CORS_PROXY + encodeURIComponent(targetUrl), {
-            headers: { 'X-Auth-Token': token }
-          });
-          const data = await res.json();
-          renderMatches(data.matches || []);
-        } catch (e) {
-          matchesContainer.innerHTML = `<div style="text-align:center; padding:20px; color:#f87171;">ဒေတာခေါ်ယူမှု မအောင်မြင်ပါ။ အင်တာနက်ချိတ်ဆက်မှု သို့မဟုတ် Token ပြန်စစ်ပေးပါ။</div>`;
+        if (data && data.table && data.table.length > 0) {
+          renderTable(data.table);
+        } else {
+          // Fallback to recent season if current is updating
+          const fallbackRes = await fetch(`https://www.thesportsdb.com/api/v1/json/3/lookuptable.php?l=${currentLeagueId}&s=2023-2024`);
+          const fallbackData = await fallbackRes.json();
+          renderTable(fallbackData.table || []);
         }
-      } else {
-        standingsBody.innerHTML = `<tr><td colspan="7" class="loading-spinner"><i class="fa-solid fa-spinner fa-spin"></i> ဇယားဒေတာ ဆွဲယူနေပါသည်...</td></tr>`;
-        try {
-          const targetUrl = `https://api.football-data.org/v4/competitions/${currentLeague}/standings`;
-          const res = await fetch(CORS_PROXY + encodeURIComponent(targetUrl), {
-            headers: { 'X-Auth-Token': token }
-          });
-          const data = await res.json();
-          renderStandings(data.standings[0]?.table || []);
-        } catch (e) {
-          standingsBody.innerHTML = `<tr><td colspan="7" style="color:#f87171; padding:20px;">ဇယားဒေတာ ဆွဲမရပါ။</td></tr>`;
-        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="8" style="padding:24px; color:#f87171;">ဒေတာဆွဲယူ၍ မရသေးပါ။ အင်တာနက်ချိတ်ဆက်မှုကို စစ်ဆေးပြီး Refresh ပြန်နှိပ်ပေးပါ။</td></tr>`;
       }
     }
 
-    function renderMatches(matches) {
-      const container = document.getElementById('matchesList');
-      if (!matches.length) {
-        container.innerHTML = `<div style="text-align:center; padding:20px; color:#64748b;">ပွဲစဉ် မရှိသေးပါ။</div>`;
-        return;
-      }
-
-      const sliceMatches = matches.slice(-12).reverse();
-      let html = '';
-
-      sliceMatches.forEach(m => {
-        const isLive = m.status === 'IN_PLAY' || m.status === 'PAUSED';
-        const isFinished = m.status === 'FINISHED';
-        const homeScore = m.score?.fullTime?.home ?? '-';
-        const awayScore = m.score?.fullTime?.away ?? '-';
-
-        let statusText = 'မကစားရသေး';
-        if (isLive) statusText = '🔴 LIVE';
-        else if (isFinished) statusText = 'FT';
-
-        html += `
-          <div class="match-card">
-            <div class="team">
-              <img src="${m.homeTeam.crest || ''}" class="team-img" onerror="this.style.display='none'">
-              <span>${m.homeTeam.shortName || m.homeTeam.name}</span>
-            </div>
-            <div class="score-container">
-              <div class="score-badge">${homeScore} - ${awayScore}</div>
-              <div class="status-text" style="color: ${isLive ? '#ef4444' : '#64748b'}">${statusText}</div>
-            </div>
-            <div class="team right">
-              <span>${m.awayTeam.shortName || m.awayTeam.name}</span>
-              <img src="${m.awayTeam.crest || ''}" class="team-img" onerror="this.style.display='none'">
-            </div>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-    }
-
-    function renderStandings(table) {
-      const tbody = document.getElementById('standingsBody');
+    function renderTable(table) {
+      const tbody = document.getElementById('standingsTableBody');
       if (!table.length) {
-        tbody.innerHTML = `<tr><td colspan="7">ဇယားဒေတာ မရှိပါ။</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" style="padding:20px; color:#64748b;">ဇယားဒေတာ မရှိသေးပါ။</td></tr>`;
         return;
       }
 
-      let html = '';
-      table.forEach(row => {
-        html += `
+      let rowsHtml = '';
+      table.forEach(team => {
+        const rank = parseInt(team.intRank);
+        let rankColor = '#94a3b8';
+        if (rank <= 4) rankColor = '#10b981'; // Champions League spots
+        else if (rank === 5) rankColor = '#38bdf8'; // Europa League
+
+        rowsHtml += `
           <tr>
-            <td style="font-weight: bold; color: ${row.position <= 4 ? '#10b981' : '#94a3b8'}">${row.position}</td>
+            <td style="font-weight: bold; color: ${rankColor};">${team.intRank}</td>
             <td class="team-name">
-              <img src="${row.team.crest}" style="width:18px; height:18px; object-fit:contain;">
-              <span>${row.team.shortName || row.team.name}</span>
+              <img src="${team.strBadge || ''}" class="team-badge-img" onerror="this.style.display='none'">
+              <span>${team.strTeam}</span>
             </td>
-            <td>${row.playedGames}</td>
-            <td>${row.won}</td>
-            <td>${row.draw}</td>
-            <td>${row.lost}</td>
-            <td style="font-weight:bold; color:#38bdf8;">${row.points}</td>
+            <td>${team.intPlayed}</td>
+            <td>${team.intWin}</td>
+            <td>${team.intDraw}</td>
+            <td>${team.intLoss}</td>
+            <td>${team.intGoalDifference}</td>
+            <td style="font-weight: bold; color: #38bdf8; font-size: 13.5px;">${team.intPoints}</td>
           </tr>
         `;
       });
-      tbody.innerHTML = html;
+
+      tbody.innerHTML = rowsHtml;
     }
   </script>
 </body>
